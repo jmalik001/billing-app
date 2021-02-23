@@ -6,10 +6,14 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './authorization/auth.module';
 import { UserModule } from './user/user.module';
 import { AdminModule } from './admin/admin.module';
+import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -17,6 +21,7 @@ import { AdminModule } from './admin/admin.module';
     AuthModule,
     UserModule,
     AdminModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
