@@ -8,12 +8,14 @@ import { UserModule } from './user/user.module';
 import { AdminModule } from './admin/admin.module';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FooterComponent } from './shared/components/footer/footer.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
