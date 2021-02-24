@@ -4,64 +4,77 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthService, AlertService } from '../../shared/services';
+import { IUser } from 'src/app/models';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
-    loginForm: FormGroup ;
-    loading = false;
-    submitted = false;
-    returnUrl = '';
+  loginForm: FormGroup;
+  loading = false;
+  submitted = false;
+  returnUrl = '';
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
-        private router: Router,
-        private authService: AuthService,
-        private alertService: AlertService
-    ) {
-        // redirect to home if already logged in
-        if (this.authService.userValue) {
-            this.router.navigate(['/']);
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService,
+    private alertService: AlertService
+  ) {
+    // redirect to home if already logged in
+    if (this.authService.userValue) {
+      this.router.navigate(['/']);
+    }
+    this.loginForm = this.formBuilder.group({});
+  }
+
+  ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
+
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.loginForm.controls;
+  }
+
+  onSubmit() {
+    this.submitted = true;
+
+    // reset alerts on submit
+    this.alertService.clear();
+
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+    // this.authService.login(this.f.username.value, this.f.password.value)
+    //     .pipe(first())
+    //     .subscribe(
+    //         (data: IUser) => {
+    //             this.router.navigate([this.returnUrl]);
+    //         },
+    //         (error: any) => {
+    //             this.alertService.error(error);
+    //             this.loading = false;
+    //         });
+    this.authService
+      .login(this.f.username.value, this.f.password.value)
+      .subscribe((data) => {
+        if (data) {
+          data.profiles.includes('ADMIN')
+            ? this.router.navigate(['admin'])
+            : this.router.navigate(['user']);
+        } else {
+          this.alertService.error('incorrect user name and password');
+          this.router.navigate(['login']);
         }
-        this.loginForm = this.formBuilder.group({});
-
-    }
-
-    ngOnInit() {
-        this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required]
-        });
-
-        // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    }
-
-    // convenience getter for easy access to form fields
-    get f() { return this.loginForm.controls; }
-
-    onSubmit() {
-        this.submitted = true;
-
-        // reset alerts on submit
-        this.alertService.clear();
-
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
-        }
-
-        this.loading = true;
-        // this.authService.login(this.f.username.value, this.f.password.value)
-        //     .pipe(first())
-        //     .subscribe(
-        //         (data: IUser) => {
-        //             this.router.navigate([this.returnUrl]);
-        //         },
-        //         (error: any) => {
-        //             this.alertService.error(error);
-        //             this.loading = false;
-        //         });
-        this.router.navigate(['user/user-details']);
-    }
+      });
+  }
 }
