@@ -9,6 +9,7 @@ import { AdminModule } from './admin/admin.module';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { FooterComponent } from './shared/components/footer/footer.component';
     AuthModule,
     UserModule,
     AdminModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
