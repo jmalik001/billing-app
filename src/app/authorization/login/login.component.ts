@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthService, AlertService } from '../../shared/services';
-import { IUser } from 'src/app/models/user';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -24,18 +23,15 @@ export class LoginComponent implements OnInit {
         if (this.authService.userValue) {
             this.router.navigate(['/']);
         }
+        this.loginForm = this.formBuilder.group({});
 
-        this.loginForm = this.formBuilder.group({
-          username: ['', Validators.required],
-          password: ['', Validators.required]
-      });
     }
 
     ngOnInit() {
-        // this.loginForm = this.formBuilder.group({
-        //     username: ['', Validators.required],
-        //     password: ['', Validators.required]
-        // });
+        this.loginForm = this.formBuilder.group({
+            username: ['', Validators.required],
+            password: ['', Validators.required]
+        });
 
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
