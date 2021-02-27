@@ -10,7 +10,8 @@ import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     UserModule,
     AdminModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ToastrModule.forRoot({
+
+    }),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,8 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AuthService, AlertService } from '../../shared/services';
+import { AuthService } from '../../shared/services';
 import { IUser } from 'src/app/models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private alertService: AlertService
+    //private alertService: AlertService,
+    private _toastrService: ToastrService
   ) {
     // redirect to home if already logged in
     if (this.authService.userValue) {
@@ -28,13 +30,17 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setInitialFormvalue();
+
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
+
+  private setInitialFormvalue() {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
-
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   // convenience getter for easy access to form fields
@@ -46,7 +52,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
 
     // reset alerts on submit
-    this.alertService.clear();
+    this._toastrService.clear();
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
@@ -72,8 +78,14 @@ export class LoginComponent implements OnInit {
             ? this.router.navigate(['admin'])
             : this.router.navigate(['user']);
         } else {
-          this.alertService.error('incorrect user name and password');
-          this.router.navigate(['login']);
+          //this.alertService.error('incorrect user name and password');
+          this._toastrService.error('Incorrect user name or password', '', { timeOut: 2000}).onHidden.subscribe(()=>{
+            this.loading = false;
+            this.loginForm.reset();
+            this.router.navigate(['login']);
+
+          });
+
         }
       });
   }
