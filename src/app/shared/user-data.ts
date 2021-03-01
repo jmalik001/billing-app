@@ -32,7 +32,7 @@ export const users: IUser[] = [
     password: '123',
     firstName: 'Tusarkanta',
     lastName: 'Malik',
-    profiles: ['USER', 'ADMIN'],
+    profiles: ['USER'],
     roles: [
       { role: 'canAddUser', description: 'can add user' },
       { role: 'canViewReports', description: 'can view reports' },

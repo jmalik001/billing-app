@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
         if (data) {
           data.profiles.includes('ADMIN')
             ? this.router.navigate(['admin'])
-            : this.router.navigate(['user']);
+            : this.router.navigate(['users']);
         } else {
           //this.alertService.error('incorrect user name and password');
           this._toastrService.error('Incorrect user name or password', '', { timeOut: 2000}).onHidden.subscribe(()=>{
