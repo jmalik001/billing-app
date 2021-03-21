@@ -7,7 +7,6 @@ import { AuthModule } from './authorization/auth.module';
 import {HttpClientModule} from '@angular/common/http'
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -24,7 +23,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AppRoutingModule,
     AuthModule,
     HttpClientModule,
-    FontAwesomeModule,
     ToastrModule.forRoot({
 
     }),
