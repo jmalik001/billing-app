@@ -1,4 +1,14 @@
 <p>users works!</p>
-<button type="button" class="btn btn-primary" routerLink= "/users/user-profile"> My Profile</button>
-<button type="button" class="btn btn-primary" routerLink= "/users/user-sales"> My Profile</button>
 <router-outlet></router-outlet>
+<div class="well">
+  <button type="button" class="btn btn-primary" [routerLink]="['profile']">
+    My Profile</button
+  ><br />
+  <hr />
+  <button type="button" class="btn btn-primary" [routerLink]="['user-sales']">
+    Sales</button
+  ><br />
+  
+</div>
+
+

@@ -24,7 +24,9 @@ export class LoginComponent implements OnInit {
   ) {
     // redirect to home if already logged in
     if (this.authService.userValue) {
-      this.router.navigate(['/']);
+      this.authService.userValue.profiles.includes('AMDIN')
+        ? this.router.navigate(['admin'])
+        : this.router.navigate(['user']);
     }
     this.loginForm = this.formBuilder.group({});
   }
@@ -76,7 +78,7 @@ export class LoginComponent implements OnInit {
         if (data) {
           data.profiles.includes('ADMIN')
             ? this.router.navigate(['admin'])
-            : this.router.navigate(['users']);
+            : this.router.navigate(['user']);
         } else {
           // this.alertService.error('incorrect user name and password');
           this.toastrService
