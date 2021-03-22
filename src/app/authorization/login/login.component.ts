@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   ) {
     // redirect to home if already logged in
     if (this.authService.userValue) {
-      this.authService.userValue.profiles.includes('AMDIN')
+      this.authService.userValue.profiles.includes('ADMIN')
         ? this.router.navigate(['admin'])
         : this.router.navigate(['user']);
     }

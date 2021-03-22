@@ -23,7 +23,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AppRoutingModule,
     AuthModule,
     HttpClientModule,
-    ToastrModule.forRoot({
+    ToastrModule. forRoot({
 
     }),
     BrowserAnimationsModule
