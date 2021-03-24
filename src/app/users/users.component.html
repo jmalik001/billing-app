@@ -1,16 +1,10 @@
-<p>users works!</p>
-<router-outlet></router-outlet>
-<div class="well">
-  <button type="button" class="btn btn-primary" [routerLink]="['profile']">
-    My Profile</button
-  ><br />
-  <hr />
-  <button type="button" class="btn btn-primary" [routerLink]="['user-sales']">
-    Sales</button
-  ><br />
-  <button type="button" class="btn btn-primary" (click) = "logout()">
-    Logout</button
-  ><br />
+<app-nav-bar-user></app-nav-bar-user> 
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <router-outlet></router-outlet>
+  </div>
 </div>
+
 
 
