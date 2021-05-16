@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { faCalculator } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,7 +6,6 @@ import { faCalculator } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  faCalculator = faCalculator;
 
   constructor() {}
 

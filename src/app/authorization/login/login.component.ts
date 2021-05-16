@@ -19,24 +19,26 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    //private alertService: AlertService,
-    private _toastrService: ToastrService
+    // private alertService: AlertService,
+    private toastrService: ToastrService
   ) {
     // redirect to home if already logged in
     if (this.authService.userValue) {
-      this.router.navigate(['/']);
+      this.authService.userValue.profiles.includes('ADMIN')
+        ? this.router.navigate(['admin'])
+        : this.router.navigate(['user']);
     }
     this.loginForm = this.formBuilder.group({});
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.setInitialFormvalue();
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  private setInitialFormvalue() {
+  private setInitialFormvalue(): void {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -48,11 +50,11 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
 
-  onSubmit() {
+  public onSubmit(): void {
     this.submitted = true;
 
     // reset alerts on submit
-    this._toastrService.clear();
+    this.toastrService.clear();
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
@@ -76,16 +78,16 @@ export class LoginComponent implements OnInit {
         if (data) {
           data.profiles.includes('ADMIN')
             ? this.router.navigate(['admin'])
-            : this.router.navigate(['users']);
+            : this.router.navigate(['user']);
         } else {
-          //this.alertService.error('incorrect user name and password');
-          this._toastrService.error('Incorrect user name or password', '', { timeOut: 2000}).onHidden.subscribe(()=>{
-            this.loading = false;
-            this.loginForm.reset();
-            this.router.navigate(['login']);
-
-          });
-
+          // this.alertService.error('incorrect user name and password');
+          this.toastrService
+            .error('Incorrect user name or password', '', { timeOut: 2000 })
+            .onHidden.subscribe(() => {
+              this.loading = false;
+              this.loginForm.reset();
+              this.router.navigate(['login']);
+            });
         }
       });
   }

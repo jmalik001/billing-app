@@ -10,17 +10,17 @@ import { users } from '../user-data';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private userSubject: BehaviorSubject<IUser>;
-  public user: Observable<IUser>;
+  private userSubject: BehaviorSubject<IUser | null>;
+  public user: Observable<IUser | null>;
 
   constructor(private router: Router, private http: HttpClient) {
-    this.userSubject = new BehaviorSubject<IUser>(
+    this.userSubject = new BehaviorSubject<IUser | null>(
       JSON.parse(localStorage.getItem('user')!)
     );
     this.user = this.userSubject.asObservable();
   }
 
-  public get userValue(): IUser {
+  public get userValue(): IUser | null{
     return this.userSubject.value;
   }
 
@@ -44,12 +44,12 @@ export class AuthService {
     //     }));
   }
 
-  // logout() {
-  //     // remove user from local storage and set current user to null
-  //     localStorage.removeItem('user');
-  //     this.userSubject.next(null);
-  //     this.router.navigate(['/account/login']);
-  // }
+  public logout() {
+      // remove user from local storage and set current user to null
+      localStorage.removeItem('user');
+       this.userSubject.next(null);
+      this.router.navigate(['login']);
+  }
 
   // register(user: IUser) {
   //     return this.http.post(`${environment.apiUrl}/users/register`, user);
